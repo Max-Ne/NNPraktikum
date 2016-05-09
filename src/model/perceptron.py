@@ -15,6 +15,12 @@ logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s',
                     stream=sys.stdout)
 
 
+# Name: Max Neukum
+# Matrikelnummer: 1599500
+# Email: m.neukum@web.de
+# date: 9.may 2016 22:00
+
+
 class Perceptron(Classifier):
     """
     A digit-7 recognizer based on perceptron algorithm
