@@ -27,6 +27,7 @@ class DataSet(object):
 
         # The label of the digits is always the first fields
         self.input = 1.0 * data[:, 1:]/255
+	#print data
         self.label = data[:, 0]
         self.oneHot = oneHot
         self.targetDigit = targetDigit

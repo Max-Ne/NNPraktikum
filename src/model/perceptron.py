@@ -8,6 +8,8 @@ import numpy as np
 from util.activation_functions import Activation
 from model.classifier import Classifier
 
+from report.evaluator import Evaluator
+
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s',
                     level=logging.DEBUG,
                     stream=sys.stdout)
@@ -42,7 +44,7 @@ class Perceptron(Classifier):
         self.trainingSet = train
         self.validationSet = valid
         self.testSet = test
-
+	
         # Initialize the weight vector with small random values
         # around 0 and 0.1
         self.weight = np.random.rand(self.trainingSet.input.shape[1])/10
@@ -58,6 +60,39 @@ class Perceptron(Classifier):
 
         # Here you have to implement the Perceptron Learning Algorithm
         # to change the weights of the Perceptron
+
+	# loop over epochs
+	for k in range(self.epochs):
+		
+		wrong_sets = [0]*len(self.trainingSet.input[0]) 
+		# list for sum over miss identificated sets
+
+		#iterate over training sets
+		for i in range(len(self.trainingSet.input)):
+
+			# upper left pixel is always greyscale 0
+			# -> weight[0] is useless
+			# -> use weight[0] as bias and set input[i,0] = 1	
+			self.trainingSet.input[i,0] = 1.;
+
+			#sign = 2 * label - 1
+			#label = 1 -> sgn = 1
+			#label = 0 -> sgn = -1 -> invert (cf. slides)
+			sgn = 2*self.trainingSet.label[i] - 1.
+		
+			# if false identification add to 1 list
+			if not((self.fire(sgn * self.trainingSet.input[i]) == 1)):
+				wrong_sets = np.add(wrong_sets, sgn * self.trainingSet.input[i])
+
+		# update weights
+		for j in range(len(self.weight)):
+			self.weight[j] = self.weight[j] + self.learningRate * wrong_sets[j] 
+		
+		# verbose; validation accuracy after each epoch
+		self.evaluator = Evaluator();
+		if (verbose == True):
+			print "End of epoch nr." + str(k+1) + ": "
+			self.evaluator.printAccuracy(self.validationSet, self.evaluate(test=self.validationSet.input))
         pass
 
     def classify(self, testInstance):
@@ -75,8 +110,9 @@ class Perceptron(Classifier):
         # Here you have to implement the classification for one instance,
         # i.e., return True if the testInstance is recognized as a 7,
         # False otherwise
-        pass
-
+	
+	return self.fire(testInstance);
+	
     def evaluate(self, test=None):
         """Evaluate a whole dataset.
 
