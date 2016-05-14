@@ -55,7 +55,7 @@ class Perceptron(Classifier):
         # Initialize the weight vector with small random values
         # around 0 and 0.1
         self.weight = np.random.rand(self.trainingSet.input.shape[1])/10
-"""
+    """
         # add bias weights at the beginning with the same random initialize
         np.insert(self.weight, 0, np.random.rand()/10)
 
@@ -63,7 +63,7 @@ class Perceptron(Classifier):
         np.insert(self.trainingSet.input, 0, 1, axis=1)
         np.insert(self.validationSet.input, 0, 1, axis=1)
         np.insert(self.testSet.input, 0, 1, axis=1)
-"""
+    """
     def train(self, verbose=True):
         """
         Train the perceptron with the perceptron learning algorithm.
@@ -97,7 +97,7 @@ class Perceptron(Classifier):
 			sgn = 2*self.trainingSet.label[i] - 1.
 		
 			# if false identification add to 1 list
-			if not((self.fire(sgn * self.trainingSet.input[i]) == 1)):
+			if not((self._fire(sgn * self.trainingSet.input[i]) == 1)):
 				wrong_sets = np.add(wrong_sets, sgn * self.trainingSet.input[i])
 
 		# update weights
@@ -112,7 +112,7 @@ class Perceptron(Classifier):
 			self.evaluator.printAccuracy(self.validationSet, self.evaluate(test=self.validationSet.input))
         pass
 
-"""
+	"""
         for epoch in range(self.epochs):
             if verbose:
                 print("Training epoch {0}/{1}.."
@@ -127,10 +127,10 @@ class Perceptron(Classifier):
                       .format(accuracy*100))
                 print("-----------------------------")
 
-    def _train_one_epoch(self):
-        """
-        Train one epoch, seeing all input instances
-        """
+#    def _train_one_epoch(self):
+        
+        # Train one epoch, seeing all input instances
+        
 
         for img, label in zip(self.trainingSet.input, self.trainingSet.label):
             output = self._fire(img)  # real output of the neuron
@@ -141,8 +141,8 @@ class Perceptron(Classifier):
 
         # if we want to do batch learning, accumulate the error
         # and update the weight outside the loop
->>>>>>> upstream/master
-"""
+	>>>>>>> upstream/master
+	"""
     def classify(self, testInstance):
         """Classify a single instance.
 
@@ -162,12 +162,12 @@ class Perceptron(Classifier):
 		print 'upper left pixel is not greyscale 0'
 	testInstance[0] = 1;
 	
-	return self.fire(testInstance);
-"""	
+	return self._fire(testInstance);
+	"""	
         return self._fire(testInstance)
 
->>>>>>> upstream/master
-"""
+	>>>>>>> upstream/master
+	"""
     def evaluate(self, test=None):
         """Evaluate a whole dataset.
 

@@ -8,6 +8,9 @@ import numpy as np
 from util.activation_functions import Activation
 from model.classifier import Classifier
 
+from model.logistic_layer import LogisticLayer
+
+
 logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s',
                     level=logging.DEBUG,
                     stream=sys.stdout)
@@ -55,6 +58,25 @@ class LogisticRegression(Classifier):
 
         # Here you have to implement training method "epochs" times
         # Please using LogisticLayer class
+
+	layer = LogisticLayer(n_in = (len(self.trainingSet.input[1])), n_out = 1)
+
+
+#	for i in range(self.epochs):
+#		layer.forward(inp = self.trainingSet.input)
+#		pass		
+
+#	print self.trainingSet.label[1]
+#	print len(self.trainingSet.input[1])
+	in_layer = np.ndarray((1, (len(self.trainingSet.input[1]) + 2)))
+#	print len(in_layer[0,:])+2
+#	print ([1] + self.trainingSet.input[1].tolist() + [self.trainingSet.label[1]])
+	for i in range(len(self.trainingSet.input)):
+		in_layer[0,:] = [1] + self.trainingSet.input[i].tolist() + [self.trainingSet.label[i]]
+		layer.forward(in_layer)
+#		print self.trainingSet.label[i]
+#		print in_layer.shape
+
         pass
 
     def classify(self, testInstance):
