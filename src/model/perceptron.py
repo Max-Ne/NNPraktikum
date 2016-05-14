@@ -96,7 +96,7 @@ class Perceptron(Classifier):
 		
 		# verbose; validation accuracy after each epoch
 		self.evaluator = Evaluator();
-		verbose = False;
+		#verbose = False;
 		if (verbose == True):
 			print "End of epoch nr." + str(k+1) + ": "
 			self.evaluator.printAccuracy(self.validationSet, self.evaluate(test=self.validationSet.input))
@@ -105,7 +105,7 @@ class Perceptron(Classifier):
     def classify(self, testInstance):
         """Classify a single instance.
 
-        Parameters
+	Parameters
         ----------
         testInstance : list of floats
 
@@ -117,7 +117,7 @@ class Perceptron(Classifier):
         # Here you have to implement the classification for one instance,
         # i.e., return True if the testInstance is recognized as a 7,
         # False otherwise
-	if not(testInstance[0] == 0):
+	if not(testInstance[0] == 0 or testInstance[0] == 1):
 		print 'upper left pixel is not greyscale 0'
 	testInstance[0] = 1;
 	
